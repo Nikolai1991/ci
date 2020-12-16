@@ -1,4 +1,8 @@
-FROM nginx:alpine
+FROM nginx:latest
 
-COPY default.conf /etc/nginx/conf.d/
-COPY index.html /usr/share/nginx/html/
+COPY index.html /usr/share/nginx/html
+COPY linux.png /usr/share/nginx/html
+
+EXPOSE 80 443 	
+
+CMD ["nginx", "-g", "daemon off;"]
