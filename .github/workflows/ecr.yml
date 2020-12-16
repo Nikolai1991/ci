@@ -63,7 +63,7 @@ jobs:
         git config user.email "${{ secrets.EMAIL }}"
         git config user.name "${{ secrets.USERNAME }}"
         # git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-        # git remote add upstream "https://token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.USERNAME }}/canary-app.git"
+        git remote add upstream "https://token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.USERNAME }}/canary-app.git"
         # git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
 
         git fetch upstream
