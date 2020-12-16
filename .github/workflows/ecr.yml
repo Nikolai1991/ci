@@ -51,10 +51,9 @@ jobs:
         path: canary-app
         persist-credentials: false
     
-    - name: Create local changes
+    - name: Remote repository checkout
       working-directory: canary-app/
       run: |
-        rm -rf *
         git clean -d -f
         git init
         git config --global user.email "${{ secrets.EMAIL }}"
@@ -65,7 +64,7 @@ jobs:
         # git config pull.rebase true   # rebase
         # git config pull.ff only       # fast-forward only
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git pull origin dev
+        git pull origin dev --allow-unrelated-histories
     
     - name: Push files
       working-directory: canary-app/
