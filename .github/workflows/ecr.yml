@@ -60,7 +60,8 @@ jobs:
         git config receive.denyNonFastForwards false
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git pull origin dev
+        git pull origin dev --allow-unrelated-histories
+        # git pull origin dev
     
     - name: Push files
       working-directory: canary-app/
