@@ -70,7 +70,7 @@ jobs:
     - name: Push files
       working-directory: canary-app/
       run: |
-        sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' values-prod.yaml  
+        sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' kubernetes-manifests/nginx-app/values-prod.yaml  
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
         # git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
