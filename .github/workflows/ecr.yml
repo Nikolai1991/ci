@@ -60,11 +60,11 @@ jobs:
         git config --global user.name "${{ secrets.USERNAME }}"
         git config receive.denyNonFastForwards false
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-        git config pull.rebase false  # merge (the default strategy)
-        git config pull.rebase true   # rebase
-        git config pull.ff only       # fast-forward only
+        # git config pull.rebase false  # merge (the default strategy)
+        # git config pull.rebase true   # rebase
+        # git config pull.ff only       # fast-forward only
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git rebase
+        git reset --hard
         git pull origin dev
     
     - name: Push files
