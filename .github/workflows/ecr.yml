@@ -64,7 +64,7 @@ jobs:
         git config --global user.email "${{ secrets.EMAIL }}"
         git config --global user.name "${{ secrets.USERNAME }}"
         git config receive.denyNonFastForwards false
-        git checkout main
+        git checkout master
         git push origin +HEAD
         git add values-prod.yaml
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
