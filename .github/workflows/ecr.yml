@@ -65,7 +65,7 @@ jobs:
         # git config pull.rebase true   # rebase
         # git config pull.ff only       # fast-forward only
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git pull origin dev --allow-unrelated-histories
+        git pull origin main --allow-unrelated-histories
     
     - name: Push files
       working-directory: canary-app/
