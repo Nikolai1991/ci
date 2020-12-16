@@ -65,6 +65,9 @@ jobs:
         git config --global user.name "${{ secrets.USERNAME }}"
         git config receive.denyNonFastForwards false
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+        git config pull.rebase false  # merge (the default strategy)
+        git config pull.rebase true   # rebase
+        git config pull.ff only       # fast-forward only
         git pull git pull origin dev
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
