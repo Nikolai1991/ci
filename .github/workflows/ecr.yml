@@ -59,13 +59,11 @@ jobs:
     - name: Push files
       working-directory: canary-app/kubernetes-manifests/nginx-app/
       run: |
-        git init
         git config user.email "${{ secrets.EMAIL }}"
         git config user.name "${{ secrets.USERNAME }}"
-        # git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-        git remote add  "https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git"
-        # git fetch upstream
+        git init
         git add values-prod.yaml
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
-        git remote set-url origin https://github.com/${{ secrets.USERNAME }}/canary-app.git
-        git push origin https://github.com/${{ secrets.USERNAME }}/canary-app.git
+        git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
+        # git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
+        # git push origin https://github.com/${{ secrets.USERNAME }}/canary-app.git
