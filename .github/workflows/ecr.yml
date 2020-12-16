@@ -69,6 +69,7 @@ jobs:
         git config pull.rebase true   # rebase
         git config pull.ff only       # fast-forward only
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
+        git clean -d -f
         git pull origin dev
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
