@@ -65,6 +65,7 @@ jobs:
         git config --global user.name "${{ secrets.USERNAME }}"
         git config receive.denyNonFastForwards false
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+        git pull
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
         # git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
