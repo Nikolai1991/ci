@@ -52,15 +52,9 @@ jobs:
         persist-credentials: false
     
     - name: Create local changes
-      working-directory: canary-app/kubernetes-manifests/nginx-app/
-      run: |
-        git clean -d -f
-        sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' values-prod.yaml
-    
-    - name: Push files
       working-directory: canary-app/
       run: |
-        rm -rf .git
+        git clean -d -f
         git init
         git config --global user.email "${{ secrets.EMAIL }}"
         git config --global user.name "${{ secrets.USERNAME }}"
@@ -70,8 +64,12 @@ jobs:
         git config pull.rebase true   # rebase
         git config pull.ff only       # fast-forward only
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        
         git pull origin dev
+    
+    - name: Push files
+      working-directory: canary-app/
+      run: |
+        sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' values-prod.yaml  
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
         # git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
