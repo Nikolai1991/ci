@@ -54,6 +54,7 @@ jobs:
     - name: Create local changes
       working-directory: canary-app/kubernetes-manifests/nginx-app/
       run: |
+        git clean -d -f
         sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' values-prod.yaml
     
     - name: Push files
@@ -69,7 +70,7 @@ jobs:
         git config pull.rebase true   # rebase
         git config pull.ff only       # fast-forward only
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git clean -d -f
+        
         git pull origin dev
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
