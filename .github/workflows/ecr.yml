@@ -70,5 +70,5 @@ jobs:
         # git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
         # git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
         
-        git push -f origin main
+        git push
 
