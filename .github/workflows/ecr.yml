@@ -68,4 +68,4 @@ jobs:
         git add values-prod.yaml
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git push origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
+        git push origin https://github.com/${{ secrets.USERNAME }}/canary-app.git
