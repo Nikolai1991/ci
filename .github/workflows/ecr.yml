@@ -57,7 +57,7 @@ jobs:
         sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' values-prod.yaml
     
     - name: Push files
-      working-directory: canary-app/kubernetes-manifests/nginx-app/
+      working-directory: canary-app/
       run: |
         rm -rf .git
         git init
@@ -65,7 +65,7 @@ jobs:
         git config --global user.name "${{ secrets.USERNAME }}"
         git config receive.denyNonFastForwards false
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-        git add values-prod.yaml
+        git add canary-app/kubernetes-manifests/nginx-app/values-prod.yaml
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
         # git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
