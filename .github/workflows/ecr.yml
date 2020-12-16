@@ -68,10 +68,10 @@ jobs:
         git config pull.rebase false  # merge (the default strategy)
         git config pull.rebase true   # rebase
         git config pull.ff only       # fast-forward only
-        git pull git pull origin dev
+        git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
+        git pull origin dev
         git add .
         git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
         # git remote add origin "https://github.com/${{ secrets.USERNAME }}/canary-app.git"
-        git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
         git checkout -b dev 
         git push --set-upstream origin dev
