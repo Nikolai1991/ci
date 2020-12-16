@@ -38,7 +38,7 @@ jobs:
       run: |
         # Build a docker container and
         # push it to ECR.
-        GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-4)
+        GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
         IMAGE_TAG=${GITHUB_SHA_SHORT:=latest}
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
