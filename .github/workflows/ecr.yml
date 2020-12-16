@@ -39,10 +39,10 @@ jobs:
         # Build a docker container and
         # push it to ECR.
         COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-        # IMAGE_TAG=${COMMIT_HASH:=latest}
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_HASH .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_HASH
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$COMMIT_HASH"
+        IMAGE_TAG=${COMMIT_HASH:=latest}
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
     
     - name: Checkout canary-app repo
       uses: actions/checkout@v2
@@ -65,6 +65,7 @@ jobs:
         # git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
         # git remote add upstream "https://token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ secrets.USERNAME }}/canary-app.git"
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
+
         git fetch upstream
         git checkout main
         git add values-prod.yaml
