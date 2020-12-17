@@ -54,6 +54,7 @@ jobs:
     - name: Remote repository checkout
       working-directory: canary-app/
       run: |
+        rm -rf .
         git init
         git config --global user.email "${{ secrets.EMAIL }}"
         git config --global user.name "${{ secrets.USERNAME }}"
