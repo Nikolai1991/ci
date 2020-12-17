@@ -44,6 +44,12 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
     
+    
+    - name: Clean repo
+      working-directory: /
+      run: |
+        rm -rf canary-app/
+        
     - name: Checkout canary-app repo
       uses: actions/checkout@v2
       with:
@@ -51,10 +57,10 @@ jobs:
         path: canary-app
         persist-credentials: false
     
+        
     - name: Remote repository checkout
       working-directory: canary-app/
       run: |
-        rm -rf *
         git init
         git config --global user.email "${{ secrets.EMAIL }}"
         git config --global user.name "${{ secrets.USERNAME }}"
