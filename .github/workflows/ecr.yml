@@ -43,13 +43,7 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-    
-    
-    - name: Clean repo
-      working-directory: /
-      run: |
-        rm -rf canary-app/
-        
+
     - name: Checkout canary-app repo
       uses: actions/checkout@v2
       with:
