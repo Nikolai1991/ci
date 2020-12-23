@@ -52,23 +52,27 @@ jobs:
         persist-credentials: false
     
         
-    - name: Remote repository checkout
+    - name: Git init
       working-directory: canary-app/
       run: |
         git init
         git config --global user.email "${{ secrets.EMAIL }}"
         git config --global user.name "${{ secrets.USERNAME }}"
-        git config receive.denyNonFastForwards false
+        #git config receive.denyNonFastForwards false
         git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
         git remote set-url origin https://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@github.com/${{ secrets.USERNAME }}/canary-app.git
-        git pull origin dev --allow-unrelated-histories
+        git pull origin dev #--allow-unrelated-histories
     
-    - name: Push files
+    - name: Update Values files
       working-directory: canary-app/
       run: |
         sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' kubernetes-manifests/nginx-app/*.yaml
         sed -i 's|AppVersion:.*|AppVersion: commit-${{ steps.build-image.outputs.git_commit }}|g' kubernetes-manifests/nginx-app/*.yaml
+        
+    - name: Push files
+      working-directory: canary-app/
+      run: |
+        git checkout dev
         git add .
-        git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`"
-        git checkout -b dev 
-        git push --set-upstream origin dev
+        git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`" 
+        git push origin dev
