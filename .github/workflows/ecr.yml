@@ -71,5 +71,5 @@ jobs:
       run: |
         git checkout dev
         git add .
-        git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`" 
+        git commit -m "feat: Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`" 
         git push origin dev
