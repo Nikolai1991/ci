@@ -60,7 +60,7 @@ jobs:
         git pull origin dev
 
     - name: Semantic Versioning
-    - uses: paulhatch/semantic-version@v3.2
+      uses: paulhatch/semantic-version@v3.2
       with:
         # The prefix to use to identify tags
         branch: "master"
