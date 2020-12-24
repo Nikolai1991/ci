@@ -1,8 +1,9 @@
 # This workflow will build and push a new container image to Amazon ECR
 on:
-  pull_request:
-    branches: [dev]
-    types: [opened, synchronize, closed]
+  push:
+    paths:
+    - 'CI-build-docker-image/Nginx/**'
+    - '.github/workflows/**'
 
 name: Deploy to Amazon ECR
 jobs:
@@ -27,19 +28,40 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     
+    - name: semantic-release-action
+      uses: codfish/semantic-release-action@master
+      id: semantic
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_SECRET }}
+
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
+      working-directory: CI-build-docker-image/Nginx/
+      if: steps.semantic.outputs.new-release-published == 'true'
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$TAG"
+        echo "::set-output name=tag:$TAG"
       env:
+        TAG: v$RELEASE_VERSION
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: github-action-nginx
-      working-directory: CI-build-docker-image/Nginx/
-      run: |
-        GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
-        IMAGE_TAG=${GITHUB_SHA_SHORT:=latest}
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-        echo "::set-output name=git_commit::$GITHUB_SHA_SHORT"
+
+    # - name: Build, tag, and push image to Amazon ECR
+    #   id: build-image
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     ECR_REPOSITORY: github-action-nginx
+    #   working-directory: CI-build-docker-image/Nginx/
+    #   run: |
+    #     GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
+    #     IMAGE_TAG=${GITHUB_SHA_SHORT:=latest}
+    #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+    #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    #     echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+    #     echo "::set-output name=git_commit::$GITHUB_SHA_SHORT"
 
     - name: Checkout canary-app repo
       uses: actions/checkout@v2
@@ -62,7 +84,7 @@ jobs:
       working-directory: canary-app/
       run: |
         sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' kubernetes-manifests/nginx-app/*.yaml
-        sed -i 's|AppVersion:.*|AppVersion: commit-${{ steps.build-image.outputs.git_commit }}|g' kubernetes-manifests/nginx-app/*.yaml
+        sed -i 's|AppVersion:.*|AppVersion: ${{ steps.build-image.outputs.tag }}|g' kubernetes-manifests/nginx-app/*.yaml
         
     - name: Push files
       working-directory: canary-app/
