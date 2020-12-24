@@ -29,13 +29,9 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     
-    - uses: actions/setup-node@v1
-      with:
-        node-version: "12.x"
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-    - run: npx semantic-release
+    - name: semantic-release-action
+      uses: codfish/semantic-release-action@master
+      id: semantic
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -43,7 +39,7 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       working-directory: CI-build-docker-image/Nginx/
-      # if: steps.semantic.outputs.new-release-published == 'true'
+      if: steps.semantic.outputs.new-release-published == 'true'
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$TAG
