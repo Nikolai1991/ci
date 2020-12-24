@@ -1,13 +1,19 @@
 {
-  "name": "semantic-release-with-github-actions-niko",
+  "name": "nginx-app",
   "version": "0.0.0-development",
-  "repository": "https://github.com/nikolai1991/ci",
+  "description": "",
   "main": "index.js",
-  "devDependencies": {
-    "jest": "^25.1.0",
-    "semantic-release": "^17.0.4"
-  },
   "scripts": {
     "test": "jest test.js"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikolai1991/ci.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikolai1991/ci/issues"
+  },
+  "homepage": "https://github.com/nikolai1991/ci#readme"
 }
