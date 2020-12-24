@@ -3,6 +3,10 @@
   "version": "0.0.0-development",
   "description": "",
   "main": "index.js",
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "semantic-release": "^17.0.4"
+  },
   "scripts": {
     "test": "jest test.js"
   },
