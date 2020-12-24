@@ -1,0 +1,33 @@
+name: "Lint PR"
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+  push:
+    paths:
+    - 'CI-build-docker-image/Nginx/**'
+    - '.github/workflows/**'
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v2.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Optionally, you can provide options for further constraints.
+        with:
+          # Configure which types are allowed.
+          # Default: https://github.com/commitizen/conventional-commit-types
+          types: |
+            fix
+            feat
+          # Configure which scopes are allowed.
+          scopes: |
+            core
+            ui
+          # Configure that a scope must always be provided.
+          requireScope: true
