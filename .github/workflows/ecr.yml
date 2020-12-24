@@ -1,9 +1,10 @@
 # This workflow will build and push a new container image to Amazon ECR
 on:
-  push:
-    paths:
-    - 'CI-build-docker-image/Nginx/**'
-    - '.github/workflows/**'
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
 
 name: Deploy to Amazon ECR
 jobs:
@@ -70,5 +71,5 @@ jobs:
       run: |
         git checkout dev
         git add .
-        git commit -m "Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`" 
+        git commit -m "feat: Github Actions Automatically Built in `date +"%Y-%m-%d %H:%M"`" 
         git push origin dev
