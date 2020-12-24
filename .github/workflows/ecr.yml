@@ -32,6 +32,10 @@ jobs:
     - name: semantic-release-action
       uses: codfish/semantic-release-action@master
       id: semantic
+      run: |
+        rm -f ./.npmrc
+        npm config set '//registry.npmjs.org/:_authToken' "${{ secrets.NPM_TOKEN }}"
+        npm publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
