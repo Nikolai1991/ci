@@ -6,10 +6,6 @@ on:
       - opened
       - edited
       - synchronize
-  push:
-    paths:
-    - 'CI-build-docker-image/Nginx/**'
-    - '.github/workflows/**'
 
 jobs:
   main:
