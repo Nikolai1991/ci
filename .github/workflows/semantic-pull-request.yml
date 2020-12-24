@@ -1,10 +1,9 @@
 name: "Lint PR"
 
 on:
-  push:
-    paths:
-    - 'CI-build-docker-image/Nginx/**'
-    - '.github/workflows/**'
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, closed]
 
 jobs:
   main:
