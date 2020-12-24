@@ -9,12 +9,8 @@
     "author": "Felix Becker",
     "repository": {
       "type": "git",
-      "url": "https://github.com/felixfbecker/semantic-release-docker.git"
+      "url": "https://github.com/Nikolai1991/ci.git"
     },
-    "bugs": {
-      "url": "https://github.com/felixfbecker/semantic-release-docker/issues"
-    },
-    "homepage": "https://github.com/felixfbecker/semantic-release-docker#readme",
     "keywords": [
       "docker",
       "hub",
