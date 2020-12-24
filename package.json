@@ -6,7 +6,6 @@
     "engines": {
       "node": ">=8"
     },
-    "author": "Felix Becker",
     "repository": {
       "type": "git",
       "url": "https://github.com/Nikolai1991/ci.git"

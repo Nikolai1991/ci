@@ -4,6 +4,7 @@ on:
     paths:
     - 'CI-build-docker-image/Nginx/**'
     - '.github/workflows/**'
+    - 'package.json'
 
 name: Deploy to Amazon ECR
 jobs:
