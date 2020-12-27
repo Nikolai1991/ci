@@ -30,9 +30,10 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
     
     - name: semantic-release-action
+      id: semantic
       run: |
         npx semantic-release
-        echo ${{ steps.semantic.outputs.release-version }}
+        # echo ${{ steps.semantic.outputs.release-version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
