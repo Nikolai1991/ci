@@ -29,7 +29,8 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     
-    - name: semantic-release-action@master
+    - name: semantic-release-action
+      uses: codfish/semantic-release-action@master
       id: semantic
       run: |
         npx semantic-release
@@ -40,9 +41,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-    - name: Release Version Name
-      run: echo ${{ steps.semantic.outputs.release-version }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
