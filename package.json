@@ -1,5 +1,5 @@
 {
-    "name": "ci",
+    "name": "ci-niko",
     "version": "0.0.0-development",
     "repository": "https://github.com/Nikolai1991/ci",
     "main": "index.js",
