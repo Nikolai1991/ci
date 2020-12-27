@@ -4,6 +4,7 @@ on:
     paths:
     - 'CI-build-docker-image/Nginx/**'
     - '.github/workflows/**'
+    - 'package.json'
 
 name: Deploy to Amazon ECR
 jobs:
@@ -33,7 +34,7 @@ jobs:
       id: semantic
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_SECRET }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -43,25 +44,10 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$TAG"
-        echo "::set-output name=tag:$TAG"
       env:
-        TAG: v$RELEASE_VERSION
+        TAG: v${{ steps.semantic.outputs.release-version }}
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: github-action-nginx
-
-    # - name: Build, tag, and push image to Amazon ECR
-    #   id: build-image
-    #   env:
-    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-    #     ECR_REPOSITORY: github-action-nginx
-    #   working-directory: CI-build-docker-image/Nginx/
-    #   run: |
-    #     GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
-    #     IMAGE_TAG=${GITHUB_SHA_SHORT:=latest}
-    #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-    #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-    #     echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-    #     echo "::set-output name=git_commit::$GITHUB_SHA_SHORT"
 
     - name: Checkout canary-app repo
       uses: actions/checkout@v2
@@ -82,9 +68,10 @@ jobs:
     
     - name: Update Values files
       working-directory: canary-app/
+      if: steps.semantic.outputs.new-release-published == 'true'
       run: |
+        sed -i 's|AppVersion:.*|AppVersion: v${{ steps.semantic.outputs.release-version }}|g' kubernetes-manifests/nginx-app/*.yaml
         sed -i 's|image:.*|image: ${{ steps.build-image.outputs.image }}|g' kubernetes-manifests/nginx-app/*.yaml
-        sed -i 's|AppVersion:.*|AppVersion: ${{ steps.build-image.outputs.tag }}|g' kubernetes-manifests/nginx-app/*.yaml
         
     - name: Push files
       working-directory: canary-app/
