@@ -7,6 +7,7 @@
   },
   "main": "index.js",
   "devDependencies": {
+    "@semantic-release/git": "^9.0.0",
     "jest": "^25.1.0",
     "semantic-release": "^17.3.0"
   },
