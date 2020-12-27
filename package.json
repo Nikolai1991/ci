@@ -1,0 +1,10 @@
+{
+    "name": "ci",
+    "version": "0.0.0-development",
+    "repository": "https://github.com/Nikolai1991/ci",
+    "main": "index.js",
+    "devDependencies": {
+      "jest": "^25.1.0",
+      "semantic-release": "^17.0.4"
+    }
+  }
