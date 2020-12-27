@@ -51,9 +51,11 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$TAG"
         echo "::set-output name=tag::$TAG"
       env:
-        TAG: ${{ steps.semantic.outputs.release-version }}
+        TAG: v$RELEASE_VERSION
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: github-action-nginx
+      with:
+        release-version: ${{ steps.semantic.outputs.release-version }}
 
     # - name: Build, tag, and push image to Amazon ECR
     #   id: build-image
