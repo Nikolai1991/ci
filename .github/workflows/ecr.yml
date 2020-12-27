@@ -30,11 +30,21 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
     
     - name: semantic-release-action
-      uses: codfish/semantic-release-action@master
-      id: semantic
+      run: |
+        npx semantic-release
+        # echo ${{ steps.semantic.outputs.release-version }}
+        # ${{ steps.semantic.outputs.release-version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    
+    # - run: echo "$OUTPUTS"
+    #   env:
+    #     OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
+
+    # - uses: codfish/some-other-action@master
+    #   with:
+        # release-version: ${{ steps.semantic.outputs.release-version }}
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -44,7 +54,7 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$TAG"
-        echo "::set-output name=tag:$TAG"
+        echo "::set-output name=tag::$TAG"
       env:
         TAG: v$RELEASE_VERSION
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
