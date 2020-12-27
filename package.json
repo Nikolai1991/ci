@@ -7,7 +7,7 @@
   },
   "release": {
     "branches": [
-      "*"
+      "main"
     ],
     "dryRun": false,
     "ci": false
