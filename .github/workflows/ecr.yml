@@ -32,6 +32,7 @@ jobs:
     - name: semantic-release-action
       run: |
         npx semantic-release
+        echo ${{ steps.semantic.outputs.release-version }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
