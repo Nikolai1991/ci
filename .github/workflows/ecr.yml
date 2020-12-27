@@ -68,6 +68,7 @@ jobs:
     
     - name: Update Values files
       working-directory: canary-app/
+      if: steps.semantic.outputs.new-release-published == 'true'
       run: |
         sed -i 's|image:.*|image: $ECR_REPO|g' kubernetes-manifests/nginx-app/*.yaml
         sed -i 's|AppVersion:.*|AppVersion: $TAG|g' kubernetes-manifests/nginx-app/*.yaml
