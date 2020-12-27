@@ -7,8 +7,7 @@
   },
   "release": {
     "branches": [
-      "main",
-      "dev"
+      "refs/pull/*/merge"
     ],
     "dryRun": false,
     "ci": false
