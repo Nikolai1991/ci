@@ -1,10 +1,8 @@
 # This workflow will build and push a new container image to Amazon ECR
 on:
-  push:
-    paths:
-    - 'CI-build-docker-image/Nginx/**'
-    - '.github/workflows/**'
-    - 'package.json'
+  pull_request:
+    branches:
+    - main
 
 name: Deploy to Amazon ECR
 jobs:
