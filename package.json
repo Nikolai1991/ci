@@ -6,6 +6,10 @@
     "url": "https://github.com/nikolai1991/ci.git"
   },
   "release": {
+    "branches": [
+      "main",
+      "dev"
+    ],
     "dryRun": false,
     "ci": false
   }
