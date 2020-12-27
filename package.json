@@ -1,7 +1,7 @@
 {
   "name": "nginx-app",
   "version": "0.0.0-development",
-  "description": "",
+  "description": "CI / CD Architecture:",
   "main": "index.js",
   "devDependencies": {
     "jest": "^25.1.0",
@@ -19,5 +19,6 @@
   "bugs": {
     "url": "https://github.com/nikolai1991/ci/issues"
   },
-  "homepage": "https://github.com/nikolai1991/ci#readme"
+  "homepage": "https://github.com/nikolai1991/ci#readme",
+  "dependencies": {}
 }
