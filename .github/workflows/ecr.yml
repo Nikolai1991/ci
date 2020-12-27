@@ -70,11 +70,8 @@ jobs:
       working-directory: canary-app/
       if: steps.semantic.outputs.new-release-published == 'true'
       run: |
-        sed -i 's|image:.*|image: $ECR_REPO|g' kubernetes-manifests/nginx-app/*.yaml
-        sed -i 's|AppVersion:.*|AppVersion: $TAG|g' kubernetes-manifests/nginx-app/*.yaml
-      env:
-        TAG: v${{ steps.semantic.outputs.release-version }}
-        ECR_REPO: ${{ steps.build-image.outputs.image }}
+        sed -i 's|image:.*|image: v${{ steps.semantic.outputs.release-version }}|g' kubernetes-manifests/nginx-app/*.yaml
+        sed -i 's|AppVersion:.*|AppVersion: ${{ steps.build-image.outputs.image }}|g' kubernetes-manifests/nginx-app/*.yaml
         
     - name: Push files
       working-directory: canary-app/
