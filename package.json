@@ -1,13 +1,24 @@
 {
-    "name": "nikolai1991-github-actions",
-    "version": "0.0.0-development",
-    "repository": "https://github.com/nikolai1991/ci",
-    "main": "index.js",
-    "devDependencies": {
-      "jest": "^25.1.0",
-      "semantic-release": "^17.0.4"
-    },
-    "scripts": {
-      "test": "jest test.js"
-    }
-  }
+  "name": "nikolai1991-github-actions",
+  "version": "0.0.0-development",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikolai1991/ci.git"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "semantic-release": "^17.3.0"
+  },
+  "scripts": {
+    "test": "jest test.js",
+    "semantic-release": "semantic-release"
+  },
+  "description": "CI / CD Architecture:",
+  "bugs": {
+    "url": "https://github.com/nikolai1991/ci/issues"
+  },
+  "homepage": "https://github.com/nikolai1991/ci#readme",
+  "author": "",
+  "license": "ISC"
+}
