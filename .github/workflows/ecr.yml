@@ -62,8 +62,7 @@ jobs:
         TAG: v$RELEASE_VERSION
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: github-action-nginx
-      with:
-        release-version: ${{ steps.semantic.outputs.release-version }}
+
 
     # - name: Build, tag, and push image to Amazon ECR
     #   id: build-image
